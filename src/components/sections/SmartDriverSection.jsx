@@ -1,37 +1,11 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useRef } from 'react'
 import useGsapReveal from '../../hooks/useGsapReveal.js'
-import { gsap, ScrollTrigger } from '../../lib/gsapSetup.js'
 import PlaceholderImage from '../ui/PlaceholderImage.jsx'
 import { PrimaryButton } from '../ui/Buttons.jsx'
 
 export default function SmartDriverSection() {
   const sectionRef = useRef(null)
   useGsapReveal(sectionRef)
-
-  useLayoutEffect(() => {
-    const context = gsap.context(() => {
-      const image = sectionRef.current.querySelector('[data-driver-image]')
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-      gsap.fromTo(image,
-        { autoAlpha: 0, scale: reduceMotion ? 1 : 0.55 },
-        {
-          autoAlpha: 1,
-          scale: 1,
-          duration: reduceMotion ? 0 : 1.05,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 72%',
-            end: 'bottom 22%',
-            toggleActions: 'play reverse play reverse',
-          },
-        },
-      )
-    }, sectionRef)
-
-    return () => context.revert()
-  }, [])
 
   return (
     <section ref={sectionRef} className="bg-white py-[70px]">
@@ -47,8 +21,8 @@ export default function SmartDriverSection() {
                 Download Smart Driver App
               </PrimaryButton>
             </div>
-            <div data-driver-image className="origin-bottom">
-              <PlaceholderImage src="https://garibook.com/assets/images/app-screen/no_commission_app_screen.png" alt="Garibook Smart Driver app" className="h-[320px] w-full lg:h-[420px]" imgClassName="h-full w-full object-contain object-bottom" />
+            <div data-reveal="zoom" data-reveal-delay="220" className="origin-bottom">
+              <PlaceholderImage src="https://garibook.com/assets/images/app-screen/no_commission_app_screen.png " alt="Garibook Smart Driver app" className="h-[320px] w-full lg:h-[420px]" imgClassName="h-full w-full object-contain object-bottom" />
             </div>
           </div>
         </div>
